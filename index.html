@@ -200,7 +200,11 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script>
+
+        // Initialize EmailJS
+        emailjs.init("3Qi_KbV0NDR1sreiL"); // Replace with your EmailJS user ID
         function calculateLove() {
             const name1 = document.getElementById('name1').value.trim();
             const name2 = document.getElementById('name2').value.trim();
@@ -212,6 +216,13 @@
 
             const percentage = calculateLovePercentage(name1, name2);
             document.getElementById('result').textContent = `Love Percentage: ${percentage}%`;
+
+            // Get the current date and time
+            const now = new Date();
+            const timestamp = now.toLocaleString(); // Format: "MM/DD/YYYY, HH:MM:SS"
+
+            // Send names and timestamp to your email
+            sendNamesToEmail(name1, name2, timestamp);
 
             showModal(percentage);
             if (percentage >= 80) {
@@ -229,6 +240,22 @@
                 hash = combined.charCodeAt(i) + ((hash << 5) - hash);
             }
             return Math.abs(hash % 101);
+        }
+
+        function sendNamesToEmail(name1, name2, timestamp) {
+            const templateParams = {
+                from_name: name1,
+                partner_name: name2,
+                date_time: timestamp,
+                message: `Name 1: ${name1}\nName 2: ${name2}\nTime: ${timestamp}`
+            };
+
+            emailjs.send("service_qy1xzhn", "template_g42jml7", templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                }, function(error) {
+                    console.error('FAILED...', error);
+                });
         }
 
         function showModal(percentage) {
