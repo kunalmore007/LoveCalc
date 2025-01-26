@@ -201,12 +201,16 @@
     </div>
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script> -->
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    
+    
     <script>
-
-        // Initialize EmailJS
-        emailjs.init("3Qi_KbV0NDR1sreiL"); // Replace with your EmailJS user ID
+        (function () {
+            emailjs.init({
+                publicKey: "3Qi_KbV0NDR1sreiL",
+            });
+        })();
         function calculateLove() {
             const name1 = document.getElementById('name1').value.trim();
             const name2 = document.getElementById('name2').value.trim();
